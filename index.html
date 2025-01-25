@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import CSV avec D3.js</title>
+    <script src="assets/js/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Importation de données CSV avec D3.js</h1>
+    <div id="data"></div>
+
+    <script>
+        const csvUrl = 'assets/data/exportSpipBalpeUrl.csv';
+
+        d3.csv(csvUrl).then(data => {
+            let refs = d3.select('#data').selectAll('div').data(data).enter()
+                .append('div').attr('id',(d,i)=>'url'+i);
+            refs.append('a').attr('href',d=>d.url)
+                .attr('target',"_blank")
+                .text(d=>d.titres);
+            refs.append('a').attr('href',d=>d.url)
+                .attr('target',"_blank")
+                .text(d=>d.titres);
+        }).catch(error => {
+            console.error('Erreur lors de l\'importation du CSV:', error);
+        });
+    </script>
+</body>
+</html>
